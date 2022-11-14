@@ -242,7 +242,6 @@
 	.create-title::placeholder,
 	textarea::placeholder {
 		color: rgb(169, 169, 169);
-		/* font-weight: lighter; */
 	}
 
 	label {
@@ -261,90 +260,9 @@
 		background-color: rgb(25, 92, 57);
 	}
 
-	/* input:focus {
-		box-shadow: 0px 5px 15px -10px rgba(0 0 0 / 30%);
-	} */
 	.shadow {
-		box-shadow: 0px 5px 15px -10px rgba(0 0 0 / 30%);
-	}
-
-	@keyframes open-message {
-		0% {
-			opacity: 0;
-		}
-		100% {
-			opacity: 1;
-		}
-	}
-	@keyframes close-message {
-		0% {
-			opacity: 0;
-		}
-		100% {
-			opacity: 1;
-		}
-	}
-
-	/* .saving::after {
-		opacity: 1;
-		animation: open-message 300ms ease-out;
-		content: 'saving note';
-		font-weight: bold;
-		color: white;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background-color: rgb(198, 241, 217);
-		transition: opacity 300ms;
-	}
-	.close::after {
-		opacity: 1;
-		animation: open-message 300ms ease-out;
-		content: 'saving note';
-		font-weight: bold;
-		color: white;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background-color: rgb(198, 241, 217);
-		transition: opacity 300ms;
-	} */
-
-	.lds-circle {
-		display: inline-block;
-		transform: translateZ(1px);
-	}
-	.lds-circle > div {
-		display: inline-block;
-		width: 1rem;
-		height: 1rem;
-		margin: 8px;
-		border-radius: 50%;
-		background: rgb(86, 207, 138);
-		animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-	}
-	@keyframes lds-circle {
-		0%,
-		100% {
-			animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
-		}
-		0% {
-			transform: rotateY(0deg);
-		}
-		50% {
-			transform: rotateY(1800deg);
-			animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
-		}
-		100% {
-			transform: rotateY(3600deg);
-		}
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+			0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07), 0 16px 32px rgba(0, 0, 0, 0.07),
+			0 32px 64px rgba(0, 0, 0, 0.07);
 	}
 </style>

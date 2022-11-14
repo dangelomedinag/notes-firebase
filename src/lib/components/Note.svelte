@@ -83,18 +83,20 @@
 </script>
 
 <div class="note-container" class:selected={selection.includes(note.id)} transition:scale|local>
-	<h4 class="title">{note.title}</h4>
-	<p class="content">{note.content}</p>
-	<div class="actions">
-		{#key key}
-			<span class="timeago">{getTimeAgo(note.modified.getTime())}</span>
-		{/key}
-		<a href="/notes/{note.id}">show</a>
-		<NoteActionDelete id={note.id} />
-	</div>
-	<!-- <input type="checkbox" value={note.id} bind:group={selection} /> -->
+	<a href="/notes/{note.id}">
+		<h4 class="title">{note.title}</h4>
+		<p class="content">{note.content}</p>
+		<div class="actions">
+			{#key key}
+				<span class="timeago">{getTimeAgo(note.modified.getTime())}</span>
+			{/key}
+			<!-- <a href="/notes/{note.id}">show</a> -->
+			<NoteActionDelete id={note.id} />
+		</div>
+		<!-- <input type="checkbox" value={note.id} bind:group={selection} /> -->
 
-	<slot />
+		<slot />
+	</a>
 </div>
 
 <style>
@@ -113,16 +115,10 @@
 
 	.note-container {
 		--shadow-opacity: 0.01;
-
 		border: 1px solid transparent;
 		background-color: var(--bg-ish);
 		border-radius: 10px;
-		padding: 1em;
-		height: 100%;
 		position: relative;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
 		box-shadow: 0 1px 2px rgba(0, 0, 0, var(--shadow-opacity)),
 			0 2px 4px rgba(0, 0, 0, var(--shadow-opacity)), 0 4px 8px rgba(0, 0, 0, var(--shadow-opacity)),
 			0 8px 16px rgba(0, 0, 0, var(--shadow-opacity)),
@@ -131,6 +127,19 @@
 
 		transition: box-shadow 0.3s;
 		will-change: box-shadow;
+	}
+
+	a {
+		text-decoration: none;
+		color: inherit;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: 1em;
+		height: 100%;
+	}
+	a:hover {
+		/* color: #7df1bf; */
 	}
 
 	.content {

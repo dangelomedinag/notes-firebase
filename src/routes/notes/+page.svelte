@@ -14,8 +14,8 @@
 	let count = 0;
 	let selection = [];
 
-	const increment = () => {
-		count++;
+	const handleClickSelection = (e) => {
+		e.stopPropagation();
 	};
 
 	// onMount(() => {
@@ -45,7 +45,7 @@
 	<section class="notes-container">
 		{#each data.notes as note (note.id)}
 			<Note {note} bind:selection>
-				<label class="label-selection" for={note.id}>
+				<label class="label-selection" for={note.id} on:click={handleClickSelection}>
 					<input
 						class="checkbox"
 						id={note.id}

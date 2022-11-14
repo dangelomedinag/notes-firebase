@@ -23,11 +23,15 @@
 			}
 		};
 	};
+	/** @param {Event} e*/
+	const handlerClick = (e) => {
+		e.stopPropagation();
+	};
 </script>
 
 <form action="?/delete" method="post" use:enhance={handlerDelete}>
 	<input type="hidden" value={id} name="id" />
-	<button type="submit">
+	<button type="submit" on:click={handlerClick}>
 		{#if !sending}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

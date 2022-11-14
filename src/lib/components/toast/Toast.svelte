@@ -42,7 +42,7 @@
 {#if $notifications.length > 0}
 	{#if show}
 		<div
-			transition:scale
+			transition:scale|local
 			style:transform="translateY(-{$notifications.findIndex((t) => t.id === id) * 70}px)"
 		>
 			<slot />
