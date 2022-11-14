@@ -1,11 +1,19 @@
 <script>
 	import { enhance } from '$app/forms';
+	import { createEventDispatcher } from 'svelte';
 	import Spinner from './Spinner/Spinner.svelte';
 
 	/**@type {string} */
 	export let id;
 
+	/**@type {string} */
+	export let action = '?/delete';
+
+	/**@type {string|undefined} */
+	export let redirect = undefined;
+
 	let sending = false;
+	const dispatch = createEventDispatcher();
 
 	const handlerDelete = ({ cancel }) => {
 		const ok = confirm('realmente desea eliminar esta nota?');
@@ -21,6 +29,11 @@
 				await update();
 				sending = false;
 			}
+			if (result.type === 'redirect') {
+				dispatch('redirect');
+				// await update();
+				// sending = false;
+			}
 		};
 	};
 	/** @param {Event} e*/
@@ -29,7 +42,10 @@
 	};
 </script>
 
-<form action="?/delete" method="post" use:enhance={handlerDelete}>
+<form {action} method="post" use:enhance={handlerDelete}>
+	{#if redirect}
+		<input type="hidden" value={redirect} name="redirectTo" />
+	{/if}
 	<input type="hidden" value={id} name="id" />
 	<button type="submit" on:click={handlerClick}>
 		{#if !sending}

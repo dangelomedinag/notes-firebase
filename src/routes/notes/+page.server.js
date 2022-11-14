@@ -1,6 +1,14 @@
 import { db } from '$lib/firebase';
-import { invalid } from '@sveltejs/kit';
-import { addDoc, collection, deleteDoc, doc, Timestamp, writeBatch } from 'firebase/firestore';
+import { invalid, redirect } from '@sveltejs/kit';
+import {
+	addDoc,
+	collection,
+	deleteDoc,
+	doc,
+	Timestamp,
+	updateDoc,
+	writeBatch
+} from 'firebase/firestore';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
@@ -33,12 +41,18 @@ export const actions = {
 		const field = Object.fromEntries(await request.formData());
 		const { id } = field;
 
+		console.log(field);
+
 		if (id) {
 			try {
 				await deleteDoc(doc(db, `notes/${id}`));
 			} catch (error) {
 				console.error(error);
 			}
+		}
+
+		if (field.redirectTo) {
+			throw redirect(303, field.redirectTo.toString());
 		}
 
 		return {

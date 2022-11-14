@@ -19,7 +19,7 @@
 		flex-direction: column;
 		min-height: 100vh;
 		position: relative;
-		max-width: 1000px;
+		/* max-width: 1000px; */
 		margin: 0 auto;
 	}
 
@@ -32,10 +32,10 @@
 	main {
 		flex: 1;
 		padding-inline: 1em;
-		/* max-width: 1000px; */
-		max-width: 100%;
+		max-width: 1000px;
+		width: 100%;
 		/* background-color: red; */
-		/* margin: 0 auto; */
+		margin: 0 auto;
 		/* margin-inline: auto; */
 	}
 

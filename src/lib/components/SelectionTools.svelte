@@ -44,7 +44,25 @@
 				/>
 			</svg>
 		</button>
-		<button type="reset">
+		{#if selection.length != $page.data.notes.length}
+			<button type="button" on:click={invertSelection}
+				><span>invert</span><svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
+					/>
+				</svg>
+			</button>
+		{/if}
+		<button class="close" type="reset">
+			<span>close</span>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -53,21 +71,6 @@
 				stroke="currentColor"
 			>
 				<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-			</svg>
-		</button>
-		<button type="button" on:click={invertSelection}
-			><svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke-width="1.5"
-				stroke="currentColor"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
-				/>
 			</svg>
 		</button>
 	</form>
@@ -85,8 +88,12 @@
 		z-index: 10;
 	}
 
+	form {
+		display: flex;
+		gap: 0.5em;
+	}
+
 	button {
-		/* font-size: 0.8rem; */
 		margin: 0;
 		padding: 0.5em;
 		display: inline-flex;
@@ -102,5 +109,16 @@
 	button:hover {
 		background-color: var(--selection-border);
 		border-color: transparent;
+	}
+
+	span {
+		font-size: 0.8rem;
+		line-height: 0.8rem;
+		padding: 0 0.5em;
+		margin: 0;
+	}
+
+	.close {
+		margin-left: auto;
 	}
 </style>

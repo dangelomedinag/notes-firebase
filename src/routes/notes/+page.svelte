@@ -45,8 +45,10 @@
 	<section class="notes-container">
 		{#each data.notes as note (note.id)}
 			<Note {note} bind:selection>
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<label class="label-selection" for={note.id} on:click={handleClickSelection}>
 					<input
+						tabindex="0"
 						class="checkbox"
 						id={note.id}
 						type="checkbox"
@@ -110,13 +112,29 @@
 		top: 0;
 		right: 0;
 		margin: 0.5em;
+		border-radius: 100%;
+		border: 1px solid transparent;
 		/* background-color: red; */
 		/* padding: 1em; */
 	}
 
+	.label-selection:hover {
+		background-color: var(--bg);
+	}
+	.label-selection:focus-within {
+		background-color: var(--bg);
+		border-color: white;
+	}
+
 	.checkbox {
-		appearance: none;
-		display: none;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		/* all: initial; */
+		/* appearance: none; */
+		/* visibility: none; */
+		opacity: 0;
 		margin: 0;
 		padding: 0;
 	}
@@ -128,13 +146,13 @@
 
 	.icon-check {
 		display: none;
-		/* color: inherit; */
 	}
 	.icon-uncheck {
 		opacity: 0.1;
 	}
 	.checkbox:checked {
-		display: none;
+		opacity: 0;
+		/* display: none; */
 	}
 	.checkbox:checked ~ .icon-check {
 		display: block;

@@ -84,6 +84,7 @@
 
 <div class="note-container" class:selected={selection.includes(note.id)} transition:scale|local>
 	<a href="/notes/{note.id}">
+		<slot />
 		<h4 class="title">{note.title}</h4>
 		<p class="content">{note.content}</p>
 		<div class="actions">
@@ -94,8 +95,6 @@
 			<NoteActionDelete id={note.id} />
 		</div>
 		<!-- <input type="checkbox" value={note.id} bind:group={selection} /> -->
-
-		<slot />
 	</a>
 </div>
 
