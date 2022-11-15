@@ -66,6 +66,8 @@
 		el.style.cssText = 'height:auto;';
 		el.style.cssText = 'height:' + el.scrollHeight + 'px';
 	}
+
+	$: if ($page.data.notes.length < 1) expanded = true;
 </script>
 
 <section bind:this={section} class:expanded class="create-wrapper shadow">
@@ -137,7 +139,8 @@
 
 	.create-wrapper {
 		margin-block: 1em;
-		border: 1px solid var(--bg-ish);
+		background-color: var(--bg-ish);
+		border: 1px solid var(--bg-invert);
 		border-radius: 8px;
 		position: relative;
 		overflow: hidden;
@@ -261,8 +264,12 @@
 	}
 
 	.shadow {
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
-			0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07), 0 16px 32px rgba(0, 0, 0, 0.07),
-			0 32px 64px rgba(0, 0, 0, 0.07);
+		--shadow-opacity: 0.01;
+
+		box-shadow: 0 1px 2px rgba(0, 0, 0, var(--shadow-opacity)),
+			0 2px 4px rgba(0, 0, 0, var(--shadow-opacity)), 0 4px 8px rgba(0, 0, 0, var(--shadow-opacity)),
+			0 8px 16px rgba(0, 0, 0, var(--shadow-opacity)),
+			0 16px 32px rgba(0, 0, 0, var(--shadow-opacity)),
+			0 32px 64px rgba(0, 0, 0, var(--shadow-opacity));
 	}
 </style>

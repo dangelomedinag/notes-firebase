@@ -3,6 +3,7 @@
 	import NoteActionDelete from '$lib/components/NoteActionDelete.svelte';
 	import { getSecondsDiff, getTimeAgo, getUnitAndValueDate } from '$lib/timeAgo';
 	import { afterUpdate, onDestroy, onMount } from 'svelte';
+	import { quintInOut } from 'svelte/easing';
 
 	import { scale } from 'svelte/transition';
 
@@ -18,63 +19,63 @@
 		if (timer2) clearInterval(timer);
 	};
 
-	// onMount(() => {
-	// 	const UNITS = {
-	// 		minute: 1000 * 60,
-	// 		second: 1000
-	// 	};
-	// 	const secondsElapsed = getSecondsDiff(note.modified.getTime());
-	// 	const { unit, value } = getUnitAndValueDate(secondsElapsed);
-	// 	const interval = UNITS[unit];
-	// 	const limit = 60 - value * -1;
-	// 	const next = Math.ceil(secondsElapsed / 60) * 60;
-	// 	const nextStep = Math.floor(next - secondsElapsed);
+	onMount(() => {
+		const UNITS = {
+			minute: 1000 * 60,
+			second: 1000
+		};
+		const secondsElapsed = getSecondsDiff(note.modified.getTime());
+		const { unit, value } = getUnitAndValueDate(secondsElapsed);
+		const interval = UNITS[unit];
+		const limit = 60 - value * -1;
+		const next = Math.ceil(secondsElapsed / 60) * 60;
+		const nextStep = Math.floor(next - secondsElapsed);
 
-	// 	if (unit === 'second') {
-	// 		const intervalSeconds = () => {
-	// 			const initInterval = () => {
-	// 				timer2 = setInterval(() => {
-	// 					if (key <= 60) return key++;
+		if (unit === 'second') {
+			const intervalSeconds = () => {
+				const initInterval = () => {
+					timer2 = setInterval(() => {
+						if (key <= 60) return key++;
 
-	// 					key++;
-	// 					if (timer2) clearInterval(timer2);
-	// 				}, UNITS['minute']);
-	// 			};
+						key++;
+						if (timer2) clearInterval(timer2);
+					}, UNITS['minute']);
+				};
 
-	// 			timer = setInterval(() => {
-	// 				if (key <= limit) return key++;
-	// 				key++;
-	// 				key = 0;
-	// 				if (timer) clearInterval(timer);
+				timer = setInterval(() => {
+					if (key <= limit) return key++;
+					key++;
+					key = 0;
+					if (timer) clearInterval(timer);
 
-	// 				return initInterval();
-	// 			}, interval);
-	// 		};
-	// 		intervalSeconds();
-	// 		return;
-	// 	}
+					return initInterval();
+				}, interval);
+			};
+			intervalSeconds();
+			return;
+		}
 
-	// 	if (unit === 'minute') {
-	// 		const intervalMinutes = () => {
-	// 			const initInterval = () => {
-	// 				timer = setInterval(() => {
-	// 					if (key <= limit) return key++;
-	// 					key++;
+		if (unit === 'minute') {
+			const intervalMinutes = () => {
+				const initInterval = () => {
+					timer = setInterval(() => {
+						if (key <= limit) return key++;
+						key++;
 
-	// 					return clearTimer();
-	// 				}, interval);
-	// 			};
-	// 			const completeMinute = nextStep * UNITS['second'] + UNITS['second'];
+						return clearTimer();
+					}, interval);
+				};
+				const completeMinute = nextStep * UNITS['second'] + UNITS['second'];
 
-	// 			timer2 = setTimeout(() => {
-	// 				key += 1;
-	// 				initInterval();
-	// 			}, completeMinute);
-	// 		};
-	// 		intervalMinutes();
-	// 		return;
-	// 	}
-	// });
+				timer2 = setTimeout(() => {
+					key += 1;
+					initInterval();
+				}, completeMinute);
+			};
+			intervalMinutes();
+			return;
+		}
+	});
 
 	onDestroy(() => {
 		selection = selection.filter((r) => r !== note.id);
@@ -82,7 +83,12 @@
 	});
 </script>
 
-<div class="note-container" class:selected={selection.includes(note.id)} transition:scale|local>
+<div
+	class="note-container"
+	class:selected={selection.includes(note.id)}
+	in:scale|local={{ delay: 250, easing: quintInOut }}
+	out:scale|local={{ delay: 0 }}
+>
 	<a href="/notes/{note.id}">
 		<slot />
 		<h4 class="title">{note.title}</h4>
@@ -114,8 +120,8 @@
 
 	.note-container {
 		--shadow-opacity: 0.01;
-		border: 1px solid transparent;
-		background-color: var(--bg-ish);
+		border: 1px solid var(--bg-invert);
+		background-color: transparent;
 		border-radius: 10px;
 		position: relative;
 		box-shadow: 0 1px 2px rgba(0, 0, 0, var(--shadow-opacity)),
@@ -126,6 +132,7 @@
 
 		transition: box-shadow 0.3s;
 		will-change: box-shadow;
+		/* height: 100%; */
 	}
 
 	a {
@@ -135,7 +142,7 @@
 		flex-direction: column;
 		justify-content: space-between;
 		padding: 1em;
-		height: 100%;
+		/* height: 100%; */
 	}
 	a:hover {
 		/* color: #7df1bf; */
@@ -156,6 +163,7 @@
 
 	.timeago {
 		opacity: 0.5;
+		font-size: 0.8em;
 	}
 
 	.selected {

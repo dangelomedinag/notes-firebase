@@ -25,15 +25,13 @@
 		sending = true;
 
 		return async ({ update, result }) => {
+			dispatch('afterUpdate');
 			if (result.type === 'success') {
-				await update();
-				sending = false;
 			}
 			if (result.type === 'redirect') {
-				dispatch('redirect');
-				// await update();
-				// sending = false;
+				await update();
 			}
+			sending = false;
 		};
 	};
 	/** @param {Event} e*/

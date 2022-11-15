@@ -1,13 +1,8 @@
 <script>
-	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import { fly } from 'svelte/transition';
-	import Toast from './toast/Toast.svelte';
-	// import ToastA from './toast/ToastA.svelte';
 
 	export let selection;
-	let show = false;
-	let toastInfo;
 
 	const resetSelection = () => {
 		selection = [];
@@ -20,13 +15,26 @@
 			$page.data.notes.map((t) => t.id)
 		);
 	};
+
+	const handlerDelete = async (e) => {
+		e.preventDefault();
+		const form = e.target;
+
+		const data = new FormData(form);
+		const response = await fetch(form.action, {
+			method: form.method,
+			body: data
+		});
+
+		if (response.ok) form.reset();
+	};
 </script>
 
 <!-- <Toast show={true}>{selection.length} item(s) selected</Toast> -->
 <!-- <Toast>whatever message {selection.length}</Toast> -->
 
-<div class="selection-tools" transition:fly|local={{ y: -50 }}>
-	<form on:reset={resetSelection} action="?/deleteAll" method="post" use:enhance>
+<div class="selection-tools" transition:fly|local={{ y: 50 }}>
+	<form on:reset={resetSelection} action="?/deleteAll" method="post" on:submit={handlerDelete}>
 		<input type="hidden" value={selection} name="ids" />
 		<button type="submit">
 			<span>delete {selection.length} item(s)</span>
@@ -79,18 +87,21 @@
 <style>
 	.selection-tools {
 		position: fixed;
-		top: 0;
+		bottom: 0;
 		left: 0;
 		width: 100%;
-		padding: 0.8em;
+		padding: 0.8em 0;
 		background-color: var(--selection);
-		border-bottom: 1px solid var(--selection-border);
+		border-top: 1px solid var(--selection-border);
 		z-index: 10;
 	}
 
 	form {
+		padding-inline: 1em;
 		display: flex;
 		gap: 0.5em;
+		max-width: 1000px;
+		margin: 0 auto;
 	}
 
 	button {

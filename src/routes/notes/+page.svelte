@@ -4,6 +4,8 @@
 	import NoteActionCreate from '$lib/components/NoteActionCreate.svelte';
 
 	import { onMount } from 'svelte';
+	import { flip } from 'svelte/animate';
+	import { quintIn, quintInOut, quintOut } from 'svelte/easing';
 
 	/**@type {import("./$types").ActionData} */
 	export let form;
@@ -44,48 +46,50 @@
 
 	<section class="notes-container">
 		{#each data.notes as note (note.id)}
-			<Note {note} bind:selection>
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<label class="label-selection" for={note.id} on:click={handleClickSelection}>
-					<input
-						tabindex="0"
-						class="checkbox"
-						id={note.id}
-						type="checkbox"
-						value={note.id}
-						bind:group={selection}
-					/>
+			<div class="" animate:flip={{ duration: 250 }}>
+				<Note {note} bind:selection>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<label class="label-selection" for={note.id} on:click={handleClickSelection}>
+						<input
+							tabindex="0"
+							class="checkbox"
+							id={note.id}
+							type="checkbox"
+							value={note.id}
+							bind:group={selection}
+						/>
 
-					<svg
-						class="icon icon-check"
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-						/>
-					</svg>
-					<svg
-						class="icon icon-uncheck"
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="m21,12a9,9 0 1 1 -18,0a9,9 0 0 1 18,0z"
-						/>
-					</svg>
-				</label>
-			</Note>
+						<svg
+							class="icon icon-check"
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+							/>
+						</svg>
+						<svg
+							class="icon icon-uncheck"
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="m21,12a9,9 0 1 1 -18,0a9,9 0 0 1 18,0z"
+							/>
+						</svg>
+					</label>
+				</Note>
+			</div>
 		{:else}
 			<span>empty list</span>
 		{/each}
@@ -93,14 +97,18 @@
 </div>
 
 <style>
-	.container {
-		/* padding-inline: 1em; */
+	span {
+		text-align: center;
 	}
+
+	/* .container {
+		height: 100%;
+	} */
 
 	.notes-container {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: 1em;
+		grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+		gap: 0.5em;
 		/* padding-inline: 1em; */
 	}
 

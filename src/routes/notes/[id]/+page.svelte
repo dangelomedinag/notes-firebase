@@ -101,24 +101,23 @@
 		}
 	};
 
-	beforeNavigate(async ({ cancel, to }) => {
-		const change = title !== data.note.title || content !== data.note.content || !deleting;
-		console.log({ deleting }, 'asda');
+	beforeNavigate(async ({ cancel, from, to }) => {
+		// console.log({ from: from?.url.toString(), to: to?.url.toString() });
+
+		if (deleting) return;
+		const change = title !== data.note.title || content !== data.note.content;
 
 		if (change) {
-			cancel();
 			const data = new FormData(formElement);
-			const response = await fetch('?/update', {
+			await fetch('?/update', {
 				method: 'POST',
 				body: data
 			});
 
-			/** @type {import('@sveltejs/kit').ActionResult} */
-			const result = await response.json();
+			// /** @type {import('@sveltejs/kit').ActionResult} */
+			// const result = await response.json();
 
-			if (result.type === 'success') {
-				if (to?.route?.id) await goto(to?.route.id);
-			}
+			// if (result.type === 'success') await invalidateAll();
 		}
 	});
 
@@ -164,13 +163,12 @@
 
 <div style="text-align: right;">
 	<NoteActionDelete
-		on:redirect={() => {
+		on:afterUpdate={() => {
 			deleting = true;
-			console.log('xxxxxxx');
 		}}
 		id={data.note.id}
-		redirect="/notes"
 		action="/notes?/delete"
+		redirect="/notes"
 	/>
 </div>
 
