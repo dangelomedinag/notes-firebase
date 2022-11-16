@@ -35,7 +35,6 @@ export const actions = {
 			success: true,
 			message: 'update note successful'
 		};
-
 		// throw redirect(303, '/notes');
 	}
 };

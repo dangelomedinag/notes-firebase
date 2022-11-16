@@ -27,8 +27,8 @@
 
 		function handlerFocus() {
 			expanded = true;
-			title = loremIpsum.title();
-			value = loremIpsum.content();
+			// title = loremIpsum.title();
+			// value = loremIpsum.content();
 
 			document.addEventListener('click', handlerClickOutside);
 		}
@@ -61,10 +61,10 @@
 		};
 	};
 
-	function autosize(e) {
-		let el = e.target;
-		el.style.cssText = 'height:auto;';
-		el.style.cssText = 'height:' + el.scrollHeight + 'px';
+	/**@param {HTMLElement} element*/
+	function autosize(element) {
+		element.style.height = 'auto';
+		element.style.height = element.scrollHeight + 'px';
 	}
 
 	$: if ($page.data.notes.length < 1) expanded = true;
@@ -90,7 +90,7 @@
 					type="text"
 					name="title"
 					id="title"
-					placeholder="Título"
+					placeholder="Title"
 					class="create-title"
 					bind:value={title}
 					autocomplete="off"
@@ -99,11 +99,11 @@
 		{/if}
 		<label for="content">
 			<textarea
-				placeholder="+ añade una nota"
+				placeholder="+ add a note"
 				name="content"
 				id="content"
 				use:toggleMode
-				on:keydown={autosize}
+				on:keydown={(e) => autosize(e.target)}
 				bind:value
 				rows="1"
 			/>
@@ -121,6 +121,24 @@
 		{/if}
 	</form>
 </section>
+
+{#if expanded}
+	<button
+		on:click={() => {
+			title = loremIpsum.title();
+			// const element = document.getElementById('title')
+		}}>title</button
+	>
+	<button
+		on:click={() => {
+			const element = document.getElementById('content');
+			// autosize(element);
+			value = loremIpsum.content();
+			element.value = value;
+			autosize(element);
+		}}>content</button
+	>
+{/if}
 
 <style>
 	.message {

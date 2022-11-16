@@ -16,7 +16,9 @@ export const getUnitAndValueDate = (secondsElapsed: number) => {
 };
 
 export const getTimeAgo = (timestamp: number) => {
-	const rtf = new Intl.RelativeTimeFormat();
+	const rtf = new Intl.RelativeTimeFormat('en', {
+		style: 'short'
+	});
 
 	const secondsElapsed = getSecondsDiff(timestamp);
 	const { value, unit } = getUnitAndValueDate(secondsElapsed);

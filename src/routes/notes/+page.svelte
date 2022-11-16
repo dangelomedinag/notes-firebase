@@ -107,9 +107,16 @@
 
 	.notes-container {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+		grid-template-columns: repeat(2, 1fr);
 		gap: 0.5em;
 		/* padding-inline: 1em; */
+	}
+
+	@media screen and (min-width: 700px) {
+		.notes-container {
+			/* background-color: red; */
+			grid-template-columns: repeat(auto-fill, minmax(200tpx, 1fr));
+		}
 	}
 
 	.label-selection {

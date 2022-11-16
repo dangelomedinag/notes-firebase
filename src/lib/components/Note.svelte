@@ -13,6 +13,7 @@
 	let timer = null;
 	let timer2 = null;
 	let key = 0;
+	let deleting = false;
 
 	const clearTimer = () => {
 		if (timer) clearInterval(timer);
@@ -85,6 +86,7 @@
 
 <div
 	class="note-container"
+	class:deleting
 	class:selected={selection.includes(note.id)}
 	in:scale|local={{ delay: 250, easing: quintInOut }}
 	out:scale|local={{ delay: 0 }}
@@ -98,7 +100,12 @@
 				<span class="timeago">{getTimeAgo(note.modified.getTime())}</span>
 			{/key}
 			<!-- <a href="/notes/{note.id}">show</a> -->
-			<NoteActionDelete id={note.id} />
+			<NoteActionDelete
+				on:afterUpdate={() => {
+					deleting = true;
+				}}
+				id={note.id}
+			/>
 		</div>
 		<!-- <input type="checkbox" value={note.id} bind:group={selection} /> -->
 	</a>
@@ -118,10 +125,24 @@
 		}
 	}
 
+	.deleting::after {
+		content: 'deleting';
+		position: absolute;
+		top: 0;
+		left: 0;
+		color: rgb(165, 0, 0);
+		background-color: rgb(70, 0, 0);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+	}
+
 	.note-container {
 		--shadow-opacity: 0.01;
 		border: 1px solid var(--bg-invert);
-		background-color: transparent;
+		background-color: var(--bg);
 		border-radius: 10px;
 		position: relative;
 		box-shadow: 0 1px 2px rgba(0, 0, 0, var(--shadow-opacity)),
@@ -132,7 +153,12 @@
 
 		transition: box-shadow 0.3s;
 		will-change: box-shadow;
+		/* overflow: hidden; */
 		/* height: 100%; */
+	}
+
+	.note-container:not(.selected):hover {
+		background-color: var(--bg-ish);
 	}
 
 	a {
@@ -144,8 +170,13 @@
 		padding: 1em;
 		/* height: 100%; */
 	}
-	a:hover {
-		/* color: #7df1bf; */
+
+	a:focus {
+		outline-style: dotted;
+		outline-offset: 2px;
+		outline-width: 2px;
+		outline-color: var(--selection-border);
+		border-radius: 10px;
 	}
 
 	.content {
@@ -171,5 +202,8 @@
 		border-color: var(--selection-border);
 		box-shadow: 0 2px 1px rgba(0, 0, 0, 0.06), 0 4px 2px rgba(0, 0, 0, 0.06),
 			0 8px 4px rgba(0, 0, 0, 0.06), 0 16px 8px rgba(0, 0, 0, 0.06), 0 32px 16px rgba(0, 0, 0, 0.06);
+	}
+	.selected:hover {
+		background-color: var(--selection);
 	}
 </style>
