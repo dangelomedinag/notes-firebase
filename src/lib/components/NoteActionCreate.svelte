@@ -37,6 +37,9 @@
 	};
 
 	const resetForm = async (e) => {
+		if (value.length < 1 && title.length < 1) {
+			expanded = false;
+		}
 		const textarea = e.target;
 		const element = textarea.querySelector('#content');
 		element?.setAttribute('style', '');
@@ -116,7 +119,13 @@
 					class="actions-button primary"
 					disabled={value.length < 1 && title.length < 1}>crear</button
 				>
-				<button type="reset" class="actions-button">cancel</button>
+				<button type="reset" class="actions-button">
+					{#if value.length < 1 && title.length < 1}
+						cancel
+					{:else}
+						clear
+					{/if}
+				</button>
 			</div>
 		{/if}
 	</form>

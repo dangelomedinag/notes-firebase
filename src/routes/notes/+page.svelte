@@ -41,9 +41,8 @@
 	<SelectionTools bind:selection />
 {/if}
 
+<NoteActionCreate />
 <div class="container">
-	<NoteActionCreate />
-
 	<section class="notes-container">
 		{#each data.notes as note (note.id)}
 			<div class="" animate:flip={{ duration: 250 }}>
@@ -115,17 +114,17 @@
 	@media screen and (min-width: 700px) {
 		.notes-container {
 			/* background-color: red; */
-			grid-template-columns: repeat(auto-fill, minmax(200tpx, 1fr));
+			grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 		}
 	}
 
 	.label-selection {
-		font-size: 1.4rem;
-		position: absolute;
+		/* font-size: 1.4rem; */
+		/* position: absolute; */
 		display: inline-flex;
-		height: auto;
-		top: 0;
-		right: 0;
+		/* height: auto; */
+		/* top: 0;
+		right: 0; */
 		margin: 0.5em;
 		border-radius: 100%;
 		border: 1px solid transparent;
@@ -163,7 +162,7 @@
 		display: none;
 	}
 	.icon-uncheck {
-		opacity: 0.1;
+		opacity: 0.5;
 	}
 	.checkbox:checked {
 		opacity: 0;

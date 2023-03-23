@@ -21,61 +21,62 @@
 	};
 
 	onMount(() => {
-		const UNITS = {
-			minute: 1000 * 60,
-			second: 1000
-		};
+		// const UNITS = {
+		// 	minute: 1000 * 60,
+		// 	second: 1000
+		// };
 		const secondsElapsed = getSecondsDiff(note.modified.getTime());
 		const { unit, value } = getUnitAndValueDate(secondsElapsed);
-		const interval = UNITS[unit];
+		const interval = 1000;
 		const limit = 60 - value * -1;
 		const next = Math.ceil(secondsElapsed / 60) * 60;
 		const nextStep = Math.floor(next - secondsElapsed);
 
 		if (unit === 'second') {
 			const intervalSeconds = () => {
-				const initInterval = () => {
-					timer2 = setInterval(() => {
-						if (key <= 60) return key++;
+				// const initInterval = () => {
+				// 	timer2 = setInterval(() => {
+				// 		if (key <= 60) return key++;
 
-						key++;
-						if (timer2) clearInterval(timer2);
-					}, UNITS['minute']);
-				};
+				// 		key++;
+				// 		if (timer2) clearInterval(timer2);
+				// 	}, UNITS['minute']);
+				// };
 
 				timer = setInterval(() => {
 					if (key <= limit) return key++;
 					key++;
-					key = 0;
+					// key = 0;
 					if (timer) clearInterval(timer);
 
-					return initInterval();
+					// return initInterval();
 				}, interval);
 			};
+
 			intervalSeconds();
 			return;
 		}
 
-		if (unit === 'minute') {
-			const intervalMinutes = () => {
-				const initInterval = () => {
-					timer = setInterval(() => {
-						if (key <= limit) return key++;
-						key++;
+		// if (unit === 'minute') {
+		// 	const intervalMinutes = () => {
+		// 		const initInterval = () => {
+		// 			timer = setInterval(() => {
+		// 				if (key <= limit) return key++;
+		// 				key++;
 
-						return clearTimer();
-					}, interval);
-				};
-				const completeMinute = nextStep * UNITS['second'] + UNITS['second'];
+		// 				return clearTimer();
+		// 			}, interval);
+		// 		};
+		// 		const completeMinute = nextStep * UNITS['second'] + UNITS['second'];
 
-				timer2 = setTimeout(() => {
-					key += 1;
-					initInterval();
-				}, completeMinute);
-			};
-			intervalMinutes();
-			return;
-		}
+		// 		timer2 = setTimeout(() => {
+		// 			key += 1;
+		// 			initInterval();
+		// 		}, completeMinute);
+		// 	};
+		// 	intervalMinutes();
+		// 	return;
+		// }
 	});
 
 	onDestroy(() => {
@@ -92,13 +93,21 @@
 	out:scale|local={{ delay: 0 }}
 >
 	<a href="/notes/{note.id}">
-		<slot />
-		<h4 class="title">{note.title}</h4>
-		<p class="content">{note.content}</p>
+		{#if note.title}
+			<h4 class="title">{note.title}</h4>
+		{/if}
+		{#if note.content}
+			<p class="content">{note.content}</p>
+		{/if}
+	</a>
+	<div class="footer">
+		{#key key}
+			<span class="timeago">{getTimeAgo(note.modified.getTime())}</span>
+		{/key}
+
 		<div class="actions">
-			{#key key}
-				<span class="timeago">{getTimeAgo(note.modified.getTime())}</span>
-			{/key}
+			<slot />
+			<!-- <slot /> -->
 			<!-- <a href="/notes/{note.id}">show</a> -->
 			<NoteActionDelete
 				on:afterUpdate={() => {
@@ -107,15 +116,15 @@
 				id={note.id}
 			/>
 		</div>
-		<!-- <input type="checkbox" value={note.id} bind:group={selection} /> -->
-	</a>
+	</div>
+	<!-- <input type="checkbox" value={note.id} bind:group={selection} /> -->
 </div>
 
 <style>
 	@media (prefers-color-scheme: dark) {
 		:root {
 			--selection: #1d4262;
-			--selection-border: rgba(255, 255, 255, 0.2);
+			--selection-border: rgba(142, 142, 142, 0.05);
 		}
 	}
 	@media (prefers-color-scheme: light) {
@@ -153,7 +162,7 @@
 
 		transition: box-shadow 0.3s;
 		will-change: box-shadow;
-		/* overflow: hidden; */
+		overflow: hidden;
 		/* height: 100%; */
 	}
 
@@ -179,17 +188,31 @@
 		border-radius: 10px;
 	}
 
+	.title {
+		margin-top: 0;
+	}
+
 	.content {
 		flex: 1;
 		word-break: break-word;
-		padding-bottom: 2em;
+		margin: 0;
+		/* padding-bottom: 2em; */
 	}
 
-	.actions {
-		font-size: 1rem;
+	.footer {
+		/* font-size: 1rem; */
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		/* padding-inline: 1em; */
+		padding: 0.5em 1em;
+		border: 1px solid transparent;
+		border-top-color: var(--bg-ish);
+		/* background-color: var(--selection-border); */
+	}
+
+	.actions {
+		/* font-size: 1rem; */
 	}
 
 	.timeago {
@@ -202,6 +225,9 @@
 		border-color: var(--selection-border);
 		box-shadow: 0 2px 1px rgba(0, 0, 0, 0.06), 0 4px 2px rgba(0, 0, 0, 0.06),
 			0 8px 4px rgba(0, 0, 0, 0.06), 0 16px 8px rgba(0, 0, 0, 0.06), 0 32px 16px rgba(0, 0, 0, 0.06);
+	}
+	.selected .footer {
+		background-color: var(--selection-border);
 	}
 	.selected:hover {
 		background-color: var(--selection);
