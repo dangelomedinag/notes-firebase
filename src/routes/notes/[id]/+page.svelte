@@ -1,17 +1,11 @@
 <script>
 	import { applyAction, enhance } from '$app/forms';
 	import { beforeNavigate, goto, invalidateAll } from '$app/navigation';
-	// import { page } from '$app/stores';
-	// import Note from '$lib/components/Note.svelte';
 	import NoteActionDelete from '$lib/components/NoteActionDelete.svelte';
 	import { getSecondsDiff, getTimeAgo, getUnitAndValueDate } from '$lib/timeAgo';
-	import { onDestroy } from 'svelte';
-	// import { onMount } from 'svelte';
 
-	/** @type {import('./$types').PageData} */
 	export let data;
 
-	/** @type {import('./$types').ActionData} */
 	export let form;
 
 	/** @type {HTMLFormElement} */

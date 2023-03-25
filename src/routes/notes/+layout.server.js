@@ -1,10 +1,7 @@
 // import type { LayoutServerLoad } from './$types';
 import { collection, getDocs, Timestamp } from 'firebase/firestore';
 import { db } from '$lib/firebase';
-// import type { Note } from '$lib/components/notes/notes';
-// import type { ClientNote, ServerNote } from '$lib/types';
 
-/** @type {import('./$types').LayoutServerLoad} */
 export async function load() {
 	/**@type {import("$lib/types").ClientNote[]} */
 	let notes = [];

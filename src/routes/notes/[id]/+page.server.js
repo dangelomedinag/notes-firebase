@@ -1,8 +1,7 @@
 import { db } from '$lib/firebase';
-import { invalid } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import { doc, Timestamp, updateDoc } from 'firebase/firestore';
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load({ parent, params }) {
 	const { notes } = await parent();
 
@@ -11,13 +10,12 @@ export async function load({ parent, params }) {
 	return { note };
 }
 
-/** @type {import('./$types').Actions} */
 export const actions = {
 	update: async ({ request }) => {
 		const fields = Object.fromEntries(await request.formData());
 
 		if (!fields.title || !fields.content || !fields.id) {
-			return invalid(404, { success: false, message: 'invalid or missing title/content' });
+			return fail(404, { success: false, message: 'invalid or missing title/content' });
 		}
 
 		try {
@@ -35,6 +33,5 @@ export const actions = {
 			success: true,
 			message: 'update note successful'
 		};
-		// throw redirect(303, '/notes');
 	}
 };

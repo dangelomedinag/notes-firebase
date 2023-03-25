@@ -1,5 +1,5 @@
 import { db } from '$lib/firebase';
-import { invalid, redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import {
 	addDoc,
 	collection,
@@ -16,7 +16,7 @@ export const actions = {
 		const fields = Object.fromEntries(await request.formData());
 
 		if (!fields.title && !fields.content) {
-			return invalid(404, { success: false, message: 'invalid or missing title/content' });
+			return fail(404, { success: false, message: 'invalid or missing title/content' });
 		}
 
 		try {
