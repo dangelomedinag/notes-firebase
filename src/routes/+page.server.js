@@ -41,8 +41,6 @@ export const actions = {
 		const field = Object.fromEntries(await request.formData());
 		const { id } = field;
 
-		console.log(field);
-
 		if (id) {
 			try {
 				await deleteDoc(doc(db, `notes/${id}`));

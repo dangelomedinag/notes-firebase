@@ -96,8 +96,6 @@
 	};
 
 	beforeNavigate(async ({ cancel, from, to }) => {
-		// console.log({ from: from?.url.toString(), to: to?.url.toString() });
-
 		if (deleting) return;
 		const change = title !== data.note.title || content !== data.note.content;
 
@@ -118,8 +116,6 @@
 	// async function handleSubmit(event) {
 	// 	const data = new FormData(this);
 
-	// 	console.log(this.action);
-
 	// 	const response = await fetch(this.action, {
 	// 		method: 'POST',
 	// 		body: data
@@ -133,11 +129,10 @@
 	// 		// applyAction(result);
 	// 	}
 
-	// 	console.log('chaoo');
 	// }
 </script>
 
-<a href="/notes">back</a>
+<a href="/">back</a>
 
 <!-- <br /> -->
 <!-- <code>{data.note.id}</code> -->
@@ -161,8 +156,8 @@
 			deleting = true;
 		}}
 		id={data.note.id}
-		action="/notes?/delete"
-		redirect="/notes"
+		action="?/delete"
+		redirect="/"
 	/>
 </div>
 

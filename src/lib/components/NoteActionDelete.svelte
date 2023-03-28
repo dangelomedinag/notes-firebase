@@ -17,7 +17,7 @@
 
 	const handlerDelete = ({ cancel }) => {
 		const ok = confirm('realmente desea eliminar esta nota?');
-		// console.log(ok);
+
 		if (!ok) {
 			cancel();
 			return;

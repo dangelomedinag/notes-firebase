@@ -249,15 +249,12 @@
 		display: block;
 		font-size: 1.2em;
 		font-weight: bold;
-		/* color: #646464; */
 		background-color: transparent;
 		border-radius: 0;
 		width: 100%;
 		padding: 0.8em;
-		/* border-radius: 6px; */
 		outline: none;
 		border: 1px solid transparent;
-		/* position: relative; */
 	}
 	.create-title,
 	textarea {
@@ -267,6 +264,7 @@
 	.create-title:focus,
 	textarea:focus {
 		opacity: 1;
+		background-color: #56cf8a07;
 	}
 
 	.create-title::placeholder,
@@ -287,7 +285,7 @@
 		left: 0;
 		width: 2px;
 		height: 100%;
-		background-color: rgb(25, 92, 57);
+		background-color: rgb(43, 152, 96);
 	}
 
 	.shadow {

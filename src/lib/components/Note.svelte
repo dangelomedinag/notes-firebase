@@ -92,7 +92,7 @@
 	in:scale|local={{ delay: 250, easing: quintInOut }}
 	out:scale|local={{ delay: 0 }}
 >
-	<a href="/notes/{note.id}">
+	<a href="/{note.id}">
 		{#if note.title}
 			<h4 class="title">{note.title}</h4>
 		{/if}
@@ -209,10 +209,6 @@
 		border: 1px solid transparent;
 		border-top-color: var(--bg-ish);
 		/* background-color: var(--selection-border); */
-	}
-
-	.actions {
-		/* font-size: 1rem; */
 	}
 
 	.timeago {

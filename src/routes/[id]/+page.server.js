@@ -24,7 +24,6 @@ export const actions = {
 				content: fields.content,
 				modified: Timestamp.now()
 			});
-			console.log('send');
 		} catch (error) {
 			console.error(error);
 		}
